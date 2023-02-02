@@ -1,0 +1,15 @@
+18,20c18,27
+<     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+<                       '$status $body_bytes_sent "$http_referer" '
+<                       '"$http_user_agent" "$http_x_forwarded_for"';
+---
+>     log_format main escape=json '{ "@timestamp" : "$time_iso8601", '
+>                                 '"message" : "STATUS=$status - client ip=$remote_addr - $remote_user - method=$request_method - request=$request", '
+>                                 '"core.request_length" : $request_length, '
+>                                 '"core.bytes_sent" : "$bytes_sent", '
+>                                 '"core.body_bytes_sent" : "$body_bytes_sent", '
+>                                 '"core.referer" : "$http_referer", '
+>                                 '"core.user_agent" : "$http_user_agent", '
+>                                 '"core.upstream_addr" : "$upstream_addr", '
+>                                 '"core.upstream_status" : "$upstream_status", '
+>                                 '"core.request_time" : "$request_time" }';
